@@ -148,5 +148,8 @@ game-overlay {
 }
 
 submit-area {
+  height: 25px;
+  width: 500px;
+  display: flex;
   background-color: aqua;
 }

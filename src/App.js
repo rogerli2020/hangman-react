@@ -6,6 +6,7 @@ import Keyboard from "./components/keyboard";
 import ScoreBoard from "./components/scoreBoard"
 import Tips from "./components/tipsPage"
 import SubmitGuess from './components/guessSubmission';
+import SubmitNewWord from './components/newWordSubmission';
 
 class App extends Component {
   state = { 
@@ -13,9 +14,11 @@ class App extends Component {
     currentWordState: null,
     tipsOpen: false,
     correctGuesses: [],
-    falseGuesses: [],
+    falseGuesses: false,
     hintCount: 0,
     changeCount: 0,
+    gameEnded: false,
+    falseGuessCount: 0,
     players: [
       { key: 0,
         name: "Player",
@@ -62,18 +65,33 @@ class App extends Component {
       await this.setState({falseGuesses: this.state.falseGuesses.concat(character)})
     }
     this.getWordState();
+    if (this.state.currentWordState.toString() == this.state.correctWord) {
+      this.setState( {gameEnded : true} )
+    }
   }
 
-  setWord = async () => {
+  setWord = async (inp) => {
     // THIS IS A TEST FUNCTION!!!
-    await this.setState({correctWord : "ALCOHOL" }, () => {console.log(this.state.correctWord)});
+    var inp = inp.toUpperCase()
+    await this.setState( {correctWord : inp, gameEnded : false } )
     this.getWordState();
   }
 
   toggleTips =  () => {
-    const newBool = !this.state.tipsOpen
-    console.log(newBool)
-    this.setState({tipsOpen : newBool})
+    this.setState({tipsOpen : !this.state.tipsOpen})
+  }
+
+  handleGuessSubmission = (inp) => {
+    if (this.state.correctWord === "**PLACEHOLDER**") return; 
+    var inp = inp.toUpperCase()
+
+    if (inp == this.state.correctWord) {
+      this.setState({gameEnded : true})
+    } 
+    else {
+      const newFalseGuessCount = this.state.falseGuessCount + 1
+      this.setState( {falseGuessCount : newFalseGuessCount} )
+    }
   }
 
   render() { 
@@ -90,15 +108,15 @@ class App extends Component {
             score={player.score}/>)
         )}
         <Keyboard 
-          isReady={this.state.correctWord==="**PLACEHOLDER**" ? false : true}
+          isReady={this.state.correctWord==="**PLACEHOLDER**" || this.state.gameEnded ? false : true}
           handleCharacterClick={this.handleCharacterClick}
           usedList={this.state.correctGuesses + this.state.falseGuesses}/>
 
-        <button onClick={this.setWord}>START GAME</button>
         <button onClick={this.toggleTips}>TIPS</button>
         {this.state.tipsOpen ? <Tips onClick={this.toggleTips}/> : null}
         <ScoreBoard currState={this.state} addScore={this.updateScore}></ScoreBoard>
-        <SubmitGuess/>
+        <SubmitGuess handleGuessSubmission={this.handleGuessSubmission}/>
+        <SubmitNewWord setWord={this.setWord}/>
         </main>
       </React.Fragment>
      );

@@ -1,20 +1,20 @@
 import React, { Component } from 'react'
 
-class SubmitGuess extends Component {
+class SubmitNewWord extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
-        this.props.handleGuessSubmission(event.target[0].value)
+        this.props.setWord(event.target[0].value)
     }
 
     render() { 
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="enter your guess here..."/>
+                <input type="text" placeholder="enter a new word for the guesser..."/>
                 <input type="submit"/>
             </form>
         );
     }
 }
  
-export default SubmitGuess;
+export default SubmitNewWord;

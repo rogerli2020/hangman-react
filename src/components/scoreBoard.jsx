@@ -10,7 +10,7 @@ class ScoreBoard extends Component {
 
         const baseScore = Math.floor(1000 * (wrongCharCount - currState.falseGuesses.length)/(wrongCharCount))
         const reward = Math.floor(500 * (correctCharCount - currState.correctGuesses.length)/correctCharCount)
-        const penalty = 100 * currState.hintCount
+        const penalty = 100 * currState.hintCount + 200 * currState.falseGuessCount
         const compensation = 25 * currState.changeCount
         const total = baseScore + reward - penalty + compensation
 
