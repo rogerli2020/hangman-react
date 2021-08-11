@@ -11,3 +11,142 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+player-plate.base {
+  width: 250px;
+  height: 75px;
+  display: flex;
+  align-items: flex-start;
+  background-color: coral;
+  margin: 5px;
+}
+
+player-plate.playerName {
+  font-size: 25px;
+  font-weight: bold;
+  align-self: center;
+}
+
+player-plate.avatar {
+  height: 75px;
+  width: 75px;
+  align-self: center;
+}
+
+img.playerAvatar {
+  max-width: 50px;
+  max-height: 100%;
+  align-self: center;
+  margin: 5px;
+}
+
+player-plate.score {
+  font-size: 15px;
+  align-self:center;
+}
+
+role-displayer {
+  font-weight: bold;
+  font-size: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-color: lightgray;
+}
+
+word-board{
+  align-items:center;
+  width: 500px;
+  height: 200px;
+  background-color: antiquewhite;
+  display:flex;
+  border-style: dotted;
+  margin: 50px;
+  justify-content: center;
+}
+
+word-boardtext {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+word-boardtext.notext {
+  font-size: 15px;
+  color: gray;
+  font-style: italic;
+}
+
+each-key {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  background-color: black;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size:15px;
+  color: white;
+  margin: 2px;
+  border-radius: 3px;
+}
+
+each-key.used {
+  background-color: rgb(94, 94, 94);
+  cursor: default;
+  font-weight: lighter;
+}
+
+keyboard-panel {
+  height: 135px;
+  width: 500px;
+  display:list-item;
+  background-color: rgb(179, 179, 179);
+}
+
+each-row-of-keys {
+  height: auto;
+  width: auto;
+  display:flex;
+  align-self:center;
+  justify-content: center;
+}
+
+keyboard-panel.overlay {
+  position: absolute;
+  background-color: rgba(0,0,0,0.75);
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  font-style: italic;
+}
+
+score-board {
+  height: 200px;
+  width: 400px;
+  background-color:aquamarine;
+  display: flex;
+}
+
+game-overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: flex; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.75); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+  color: white;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+submit-area {
+  background-color: aqua;
+}
