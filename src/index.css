@@ -14,12 +14,13 @@ code {
 
 
 player-plate.base {
-  width: 250px;
-  height: 60px;
+  width: auto;
+  height: auto;
   display: flex;
   align-items: flex-start;
-  background-color: coral;
+  background-color: rgb(61, 184, 184);
   margin: 5px;
+  align-self: left;
 }
 
 player-plate.playerName {
@@ -36,8 +37,8 @@ player-plate.avatar {
 }
 
 img.playerAvatar {
-  max-width: 50px;
-  max-height: 100%;
+  width: 50px;
+  height: 50px;
   align-self: center;
   margin: 5px;
 }
@@ -51,21 +52,18 @@ player-plate.score {
 role-displayer {
   font-weight: bold;
   font-size: 15px;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background-color: lightgray;
+
+
+  background-color: rgb(255, 184, 184);
 }
 
 word-board{
   align-items:center;
-  width: 500px;
-  height: 200px;
-  background-color: antiquewhite;
+  width: auto;
+  height: auto;
+  background-color: azure;
   display:flex;
   border-style: dotted;
-  margin: 50px;
   justify-content: center;
 }
 
@@ -89,8 +87,8 @@ word-boardtext.notext {
 }
 
 each-key {
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   display: flex;
   background-color: black;
   cursor: pointer;
@@ -109,10 +107,13 @@ each-key.used {
 }
 
 keyboard-panel {
-  height: 135px;
-  width: 500px;
-  display:list-item;
+  height: 200px;
+  width: 650px;
+  display:block;
   background-color: rgb(179, 179, 179);
+  margin:5px;
+  align-items:center;
+  justify-content: center;
 }
 
 each-row-of-keys {
@@ -130,6 +131,7 @@ keyboard-panel.overlay {
   text-align: center;
   color: white;
   font-style: italic;
+  margin:0px;
 }
 
 score-board {
@@ -157,9 +159,33 @@ game-overlay {
   justify-content: center;
 }
 
-submit-area {
-  height: 25px;
-  width: 500px;
-  display: flex;
-  background-color: aqua;
+
+main-board {
+  height: 550px;
+  width: 950px;
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'score board'
+    'guesser-panel keyboard';
+  grid-gap: 25px;
+  background-color:rgb(155, 210, 210);
+  padding: 10px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+main-board.overlay {
+  position: absolute;
+  background-color: rgba(17, 59, 60, 0.892);
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  font-style: italic;
+  margin:0px;
+  display:flex;
+  z-index: 2;
 }

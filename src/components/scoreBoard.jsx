@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
+import Card from '@material-ui/core/Card';
+
 
 class ScoreBoard extends Component {
 
     render() { 
         return ( 
-            <score-board>
-                <b>{this.props.currState.players[0].name}'s SCORE:</b> <br/>
-                [Base Score]: {this.props.scores[0]}<br/>
-                [Reward]: {this.props.scores[1]}<br/>
-                [Compensation]: {this.props.scores[3]}<br/>
-                [Penalty]: -{this.props.scores[2]}<br/>
-                [TOTAL]: {this.props.scores[4]} <br/>
+            <Card variant="outlined">
+                <b> {this.props.currState.players[0].name}'s SCORE: </b>
+                <li>[Base Score]: {this.props.scores[0]}</li>
+                <li>[Reward]: {this.props.scores[1]}</li>
+                <li>[Compensation]: {this.props.scores[3]}</li>
+                <li>[Penalty]: -{this.props.scores[2]}</li>
+                <li>[TOTAL]: {this.props.scores[4]}</li>
                 <br/>
                 [CUM.TOTAL] : {this.props.currState.players[0].score}
-            </score-board> 
+            </Card> 
         );
     }
 }

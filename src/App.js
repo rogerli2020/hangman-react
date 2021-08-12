@@ -7,6 +7,11 @@ import ScoreBoard from "./components/scoreBoard"
 import Tips from "./components/tipsPage"
 import SubmitGuess from './components/guessSubmission';
 import SubmitNewWord from './components/newWordSubmission';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from "@material-ui/core/Typography"
+
 
 class App extends Component {
   state = { 
@@ -23,13 +28,13 @@ class App extends Component {
     surrendered: false,
     players: [
       { key: 0,
-        name: "Bob",
-        avatar: "https://image.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg",
+        name: "Player1",
+        avatar: "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
         score: 0,
         }, 
       { key: 1,
-        name: "Alice",
-        avatar: "https://cdn.iconscout.com/icon/premium/png-512-thumb/female-avatar-12-774634.png",
+        name: "Player2",
+        avatar: "https://previews.123rf.com/images/cundrawan703/cundrawan7031207/cundrawan703120700008/14519717-dog-avatar-cartoon-character-icon.jpg",
         score: 0,
         }, 
     ]
@@ -53,6 +58,7 @@ class App extends Component {
   }
 
   updateScore = async (newScore) => {
+    if (this.state.gameState != "i") {return}
     var newArr = [...this.state.players]
     newArr[0].score += newScore
     await this.setState({players : newArr})
@@ -68,8 +74,8 @@ class App extends Component {
     }
     this.getWordState();
     if (this.state.currentWordState.toString() == this.state.correctWord) {
-      this.setState( {gameState : "e"} );
       this.calcScore(true);
+      this.setState( {gameState : "e"} );
     }
   }
 
@@ -87,7 +93,7 @@ class App extends Component {
         falseGuesses: [],
         hintCount: 0,
         changeCount: 0,
-        gameState: "n", // n = notready, i = inprogress, e = ended, s = surrendered
+        gameState: "n",
         falseGuessCount: 0,
         surrendered: false,
         players: [
@@ -135,8 +141,8 @@ class App extends Component {
     const reward = Math.floor(500 * (correctCharCount - currState.correctGuesses.length)/correctCharCount)
     const penalty = 100 * currState.hintCount + 200 * currState.falseGuessCount
     const compensation = 25 * currState.changeCount
-    const total = baseScore + reward - penalty + compensation
-
+    const total = (baseScore + reward - penalty + compensation) > 100 ? (baseScore + reward - penalty + compensation) : 100
+    
     if (updateScore) {
       if (this.state.surrendered) {
         this.updateScore(100)
@@ -148,7 +154,7 @@ class App extends Component {
   }
 
   surrender = async () => {
-    if (this.state.gameState != "i" || this.state.surrendered) {return} 
+    if (this.state.gameState != "i" || this.state.surrendered) return;
     await this.setState( {surrendered : true, gameState : 's'} );
     await this.calcScore(true);
   }
@@ -157,30 +163,58 @@ class App extends Component {
     return ( 
       <React.Fragment>
         <main className="container">
+
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6">
+              Hangman (2-player local) 
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+
+        <main-board>
+
+        {/* <main-board class="overlay" /> */}
+
+        <div>
+        {this.state.gameState != "i" ? 
+          <div> {this.state.wholeGameStarted ? this.state.players[0].name : this.state.players[1].name}, enter a word to start a new game...</div> : 
+          <div>Game is in progress...</div>}
+          <br/>
+        <SubmitNewWord setWord={this.setWord}/>
+        </div>
+
+        <div>
+        <PlayerPlate
+            key={this.state.players[1].key}
+            avatar={this.state.players[1].avatar}
+            name={this.state.players[1].name}
+            score={this.state.players[1].score}/>
+        </div>
+
+        <ScoreBoard currState={this.state} scores={this.calcScore(false)}></ScoreBoard>
         <WordBoard word={this.state.currentWordState} gameState={this.state.gameState}/>
-        <RoleDisplayer player={this.state.players[0]}/>
-        {this.state.players.map(
-          player => (<PlayerPlate
-            key={player.key}
-            avatar={player.avatar}
-            name={player.name}
-            score={player.score}/>)
-        )}
+
+        <div>
+          <PlayerPlate
+              key={this.state.players[0].key}
+              avatar={this.state.players[0].avatar}
+              name={this.state.players[0].name}
+              score={this.state.players[0].score}/>
+          <SubmitGuess handleGuessSubmission={this.handleGuessSubmission}/>
+          <Button variant="contained" color="secondary"  onClick={this.surrender}>SURRENDER</Button>
+          <Button variant="contained" color="primary" onClick={this.toggleTips}>TIPS</Button>
+        </div>
+
         <Keyboard 
           isReady={this.state.correctWord==="**PLACEHOLDER**" || this.state.gameState == "e" || this.state.gameState == "s" ? false : true}
           handleCharacterClick={this.handleCharacterClick}
           usedList={this.state.correctGuesses + this.state.falseGuesses}/>
-        
-        {this.state.gameState != "i" ? 
-          <div> {this.state.wholeGameStarted ? this.state.players[0].name : this.state.players[1].name}, enter a word to start game...</div> : 
-          <div>Game is in progress...</div>}
-        <SubmitNewWord setWord={this.setWord}/>
-        <SubmitGuess handleGuessSubmission={this.handleGuessSubmission}/>
 
-        <button onClick={this.toggleTips}>TIPS</button>
-        <button onClick={this.surrender}>SURRENDER</button>
         {this.state.tipsOpen ? <Tips onClick={this.toggleTips}/> : null}
-        <ScoreBoard currState={this.state} scores={this.calcScore(false)}></ScoreBoard>
+        
+        </main-board>
 
         </main>
       </React.Fragment>
