@@ -11,11 +11,17 @@ class WordBoard extends Component {
         return returnString
     }
 
+    getState = () => {
+        if (this.props.gameState == "n") return "notext";
+        if (this.props.gameState == "e") return "ended";
+        if (this.props.gameState == "s") return "surrendered";
+        return null;
+    }
+
     render() {
         return ( 
-            <word-board>
-                <word-boardtext class={this.props.word===null ?
-                    "notext" : ""}>
+            <word-board class={this.getState()}>
+                <word-boardtext class={this.getState()}>
                         {this.props.word === null ? "a word is being selected..." : 
                         this.getString()}
                 </word-boardtext>

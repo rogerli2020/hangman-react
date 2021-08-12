@@ -6,7 +6,7 @@ class RoleDisplayer extends Component {
         return ( 
             <React.Fragment>
                 <role-displayer>
-                    YOU'RE PLAYING AS THE {this.props.role}.
+                    {this.props.player.name} is playing as the Guesser.
                 </role-displayer>
             </React.Fragment>
          );

@@ -15,7 +15,7 @@ code {
 
 player-plate.base {
   width: 250px;
-  height: 75px;
+  height: 60px;
   display: flex;
   align-items: flex-start;
   background-color: coral;
@@ -26,6 +26,7 @@ player-plate.playerName {
   font-size: 25px;
   font-weight: bold;
   align-self: center;
+  display: block;
 }
 
 player-plate.avatar {
@@ -44,6 +45,7 @@ img.playerAvatar {
 player-plate.score {
   font-size: 15px;
   align-self:center;
+  display: block;
 }
 
 role-displayer {
@@ -65,6 +67,14 @@ word-board{
   border-style: dotted;
   margin: 50px;
   justify-content: center;
+}
+
+word-board.ended {
+  background-color: green;
+}
+
+word-board.surrendered {
+  background-color: red;
 }
 
 word-boardtext {

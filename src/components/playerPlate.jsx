@@ -7,8 +7,10 @@ class PlayerPlate extends Component {
             <React.Fragment>
                 <player-plate class='base'>
                 <img class="playerAvatar" src={this.props.avatar}></img>
+                <div>
                 <player-plate class='playerName'>{this.props.name}</player-plate>
                 <player-plate class='score'>SCORE: {this.props.score}</player-plate>
+                </div>
                 </player-plate>
             </React.Fragment>
          );
