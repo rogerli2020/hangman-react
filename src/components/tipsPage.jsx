@@ -7,11 +7,10 @@ class Tips extends Component {
             <game-overlay onClick={this.props.onClick}>
                 TIPS FOR MAXIMIZING YOUR SCORE: <br/>
                 <br/>
-                1. Use as less tips as possible.  <br/>
+                1. Use as less hints (not implemented yet) as possible.  <br/>
                 2. Try to minimize the number of letters you guess.  <br/>
-                3. Once you're sure what the word is, hit the "I KNOW WHAT THE WORD IS"  <br/>
-                button and enter it. Do not enter it on the main screen or else you  <br/>
-                will lose all your reward points.  <br/>
+                3. Once you're sure what the word is, enter it directly in the form. Do not  <br/>
+                enter it using the on-screen keyboard.
                 <br/>
                 <br/>
                 CLICK ANYWHERE TO CLOSE
