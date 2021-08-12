@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TextField from "@material-ui/core/TextField"
 
 class SubmitNewWord extends Component {
 
@@ -20,8 +21,13 @@ class SubmitNewWord extends Component {
     render() { 
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="enter a new word for the guesser..."/>
-                <input type="submit"/>
+                <TextField 
+                    id="standard-basic" 
+                    variant="filled" 
+                    label="Enter a word here..." 
+                    color="primary" 
+                    style={{ margin: 8 }}
+                />                
             </form>
         );
     }

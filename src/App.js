@@ -11,6 +11,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from "@material-ui/core/Typography"
+import GameStartPage from './components/gameStartPage';
 
 
 class App extends Component {
@@ -159,6 +160,26 @@ class App extends Component {
     await this.calcScore(true);
   }
 
+  setName = (player, name) => {
+    var players = this.state.players
+    if (player===1) {
+      players[0].name = name
+    }
+    else {
+      players[1].name = name
+    }
+    this.setState({players : players})
+  }
+
+  toggleStartPage = () => {
+    this.setState({wholeGameStarted: true})
+  }
+
+  getStartPage = () => {
+    if (!this.state.wholeGameStarted) 
+    { return <GameStartPage setName={this.setName} onClick={this.toggleStartPage}/> }
+  }
+
   render() { 
     return ( 
       <React.Fragment>
@@ -175,11 +196,11 @@ class App extends Component {
 
         <main-board>
 
-        {/* <main-board class="overlay" /> */}
+        {this.getStartPage()}
 
         <div>
         {this.state.gameState != "i" ? 
-          <div> {this.state.wholeGameStarted ? this.state.players[0].name : this.state.players[1].name}, enter a word to start a new game...</div> : 
+          <div> {this.state.players[0].name}, enter a word to start a new game...</div> : 
           <div>Game is in progress...</div>}
           <br/>
         <SubmitNewWord setWord={this.setWord}/>

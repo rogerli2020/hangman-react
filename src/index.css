@@ -180,12 +180,15 @@ main-board {
 
 main-board.overlay {
   position: absolute;
-  background-color: rgba(17, 59, 60, 0.892);
+  background-color: rgba(191, 236, 255, 0.954);
   font-weight: bold;
   text-align: center;
-  color: white;
+  color: rgb(6, 54, 55);
   font-style: italic;
+  font-size: 25px;
   margin:0px;
   display:flex;
   z-index: 2;
+  align-items: center;
+  justify-content: center;
 }

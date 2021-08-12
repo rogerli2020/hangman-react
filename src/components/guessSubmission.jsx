@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import TextField from "@material-ui/core/TextField"
 
 class SubmitGuess extends Component {
 
@@ -10,8 +11,13 @@ class SubmitGuess extends Component {
     render() { 
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="enter your guess here..."/>
-                <input type="submit"/>
+                <TextField 
+                    id="standard-basic" 
+                    variant="filled" 
+                    label="Enter your guess here..." 
+                    color="primary" 
+                    style={{ margin: 8 }}
+                />      
             </form>
         );
     }
