@@ -1,29 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
 import EachKey from './eachKey';
+import { useSelector } from "react-redux"
 
-class EachRowOfKeys extends Component {
+function EachRowOfKeys(props) {
 
     // props: list of chars, list of used chars.
-    key=0
+    var key=0
 
-    render() { 
-        return ( 
-            <each-row-of-keys>
-                {
-                    this.props.rowOfKeys.map(
-                        eachChar => (
-                            <EachKey 
-                                key={this.key++}
-                                used={this.props.usedList.includes(eachChar) ? true : false}
-                                thisChar={eachChar}
-                                handleCharacterClick={this.props.handleCharacterClick}
-                            />
-                        )
+    const falseList = useSelector(state => state.falseGuessesReducer);
+    const corrList = useSelector(state => state.correctGuessesReducer);
+    const usedList = falseList + corrList;
+
+    return ( 
+        <each-row-of-keys>
+            {
+                props.rowOfKeys.map(
+                    eachChar => (
+                        <EachKey 
+                            key={key++}
+                            used={usedList.includes(eachChar) ? true : false}
+                            thisChar={eachChar}
+                        />
                     )
-                }
-            </each-row-of-keys>
-         );
-    }
+                )
+            }
+        </each-row-of-keys>
+        );
 }
  
 export default EachRowOfKeys;

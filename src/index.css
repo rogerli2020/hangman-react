@@ -60,24 +60,19 @@ role-displayer {
 word-board{
   align-items:center;
   width: auto;
-  height: auto;
+  height: 100%;
   background-color: azure;
   display:flex;
   border-style: dotted;
   justify-content: center;
 }
 
-word-board.ended {
-  background-color: green;
-}
-
-word-board.surrendered {
-  background-color: red;
-}
 
 word-boardtext {
   font-size: 30px;
   font-weight: bold;
+  align-self: center;
+  text-align: center;
 }
 
 word-boardtext.notext {
@@ -90,7 +85,7 @@ each-key {
   height: 50px;
   width: 50px;
   display: flex;
-  background-color: black;
+  background-color: rgb(48, 91, 91);
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -101,7 +96,7 @@ each-key {
 }
 
 each-key.used {
-  background-color: rgb(94, 94, 94);
+  background-color: rgb(74, 128, 128);
   cursor: default;
   font-weight: lighter;
 }
@@ -110,10 +105,11 @@ keyboard-panel {
   height: 200px;
   width: 650px;
   display:block;
-  background-color: rgb(179, 179, 179);
+  background-color: rgb(131, 187, 187);
   margin:5px;
   align-items:center;
   justify-content: center;
+  border-radius: 5px;
 }
 
 each-row-of-keys {
@@ -132,6 +128,8 @@ keyboard-panel.overlay {
   color: white;
   font-style: italic;
   margin:0px;
+  align-items: center;
+  justify-content: center;
 }
 
 score-board {
@@ -161,8 +159,8 @@ game-overlay {
 
 
 main-board {
-  height: 550px;
-  width: 950px;
+  height: max-content;
+  width: max-content;
   display: grid;
   grid-template-areas:
     'header header'
@@ -171,14 +169,15 @@ main-board {
   grid-gap: 25px;
   background-color:rgb(155, 210, 210);
   padding: 10px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  /* position: fixed; */
+  /* top: 50%;
+  left: 50%; */
   /* bring your own prefixes */
-  transform: translate(-50%, -50%);
+  /* transform: translate(-50%, -50%); */
 }
 
 main-board.overlay {
+
   position: absolute;
   background-color: rgba(191, 236, 255, 0.954);
   font-weight: bold;
@@ -191,4 +190,8 @@ main-board.overlay {
   z-index: 2;
   align-items: center;
   justify-content: center;
+}
+
+player-score-cards-container {
+  display: flex;
 }

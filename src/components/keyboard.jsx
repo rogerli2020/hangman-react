@@ -1,54 +1,62 @@
-import React, { Component } from 'react'
+import React from 'react'
 import EachRowOfKeys from './eachRowOfKeys';
+import { useSelector } from "react-redux";
 
-class Keyboard extends Component {
+function Keyboard() {
 
-    // this.props: usedList
+    const correctGuessesList = useSelector(state => state.correctGuessesReducer)
+    const falseGuessesList = useSelector(state => state.falseGuessesReducer)
+    const roundState = useSelector(state => state.roundStateReducer)
+    const usedList = correctGuessesList + falseGuessesList
 
-    checkEachChar = (eachChar) => {
-        const { falseGuesses, correctGuesses } = this.props;
+    function checkEachChar(eachChar) {
         
-        if (falseGuesses.indexOf(eachChar) !== -1 ||
-            correctGuesses.indexOf(eachChar) !== -1 ) {
+        if (falseGuessesList.indexOf(eachChar) !== -1 ||
+            correctGuessesList.indexOf(eachChar) !== -1 ) {
                 return 
         } else {
             return
         }
     }
 
-    overlay = () => {
-        if (!this.props.isReady) {
-        return <keyboard-panel class="overlay"><br/><br/><br/>waiting for the Executor to select a word...</keyboard-panel>}
+    function overlay() {
+        if (roundState === "n") {
+        return (
+            <keyboard-panel 
+                class="overlay"
+            >
+                    <br/><br/><br/>
+                    waiting for the Executor to select a word...
+            </keyboard-panel>
+            )
+        }
     }
 
-    listOfChars=[
+    const listOfChars=[
         ['Q','W','E','R','T','Y','U','I','O','P'],
         ['A','S','D','F','G','H','J','K','L'],
         ['Z','X','C','V','B','N','M']
     ]
 
-    test=['A','B','C','R']
-    key=0
+    var key=0
 
-    render() { 
-        return ( 
-            <keyboard-panel>
-                {this.overlay()}
-                {
-                    this.listOfChars.map(
-                        eachRow => (
-                            <EachRowOfKeys 
-                                key={this.key++}
-                                rowOfKeys={eachRow}
-                                usedList={this.props.usedList}
-                                handleCharacterClick={this.props.handleCharacterClick}
-                            />
-                        )
+    return ( 
+        <keyboard-panel>
+        {overlay()}
+            {
+                listOfChars.map(
+                    eachRow => (
+                        <EachRowOfKeys 
+                            key={key++}
+                            rowOfKeys={eachRow}
+                            usedList={usedList}
+                            handleCharacterClick={ () => console.log("clicked!")}
+                        />
                     )
-                }
-            </keyboard-panel>
-         );
-    }
+                )
+            }
+        </keyboard-panel>
+        );
 }
  
 export default Keyboard;

@@ -1,33 +1,36 @@
 import React, { Component } from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import Paper from '@material-ui/core/Paper'
 
-class WordBoard extends Component {
+const WordBoard = () => {
+    const wordBoardState = useSelector(state => state.wordBoardReducer)
 
-    getString = () => {
+    const getString = (wordBoardState) => {
         var returnString = ""
-        for(var i = 0; i < this.props.word.length; i++) {
-            returnString += this.props.word[i]
+        for(var i = 0; i < wordBoardState.length; i++) {
+            returnString += wordBoardState[i]
             returnString += " "
         }
         return returnString
     }
 
-    getState = () => {
-        if (this.props.gameState == "n") return "notext";
-        if (this.props.gameState == "e") return "ended";
-        if (this.props.gameState == "s") return "surrendered";
-        return null;
-    }
+    return ( 
+        <Paper style={{
+            textAlign: 'center',
+            color: "primary",
+            margin: 3,
+            height: "98%",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}>
 
-    render() {
-        return ( 
-            <word-board class={this.getState()}>
-                <word-boardtext class={this.getState()}>
-                        {this.props.word === null ? "a word is being selected..." : 
-                        this.getString()}
-                </word-boardtext>
-            </word-board>
-         );
-    }
+            <word-boardtext class={wordBoardState===null ? "notext" : null}>
+                    {wordBoardState===null ? "a word is being selected..." : 
+                    getString(wordBoardState)}
+            </word-boardtext>
+        </Paper>
+        );
 }
  
 export default WordBoard;

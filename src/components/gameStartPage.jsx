@@ -1,116 +1,148 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import TextField from "@material-ui/core/TextField"
 import Button from "@material-ui/core/Button"
+import { useDispatch } from "react-redux";
+import { setPlayer1Name, setPlayer2Name, startEntireGame } from "../actions"
 
+function GameStartPage() {
+    const [firstNameState, setFirstNameState] = useState(0);
+    const [secondNameState, setSecondNameState] = useState(0);
+    const dispatch = useDispatch();
+     // 0 - none, 1 - error, 2 - accepted.
 
-
-class GameStartPage extends Component {
-    state = {    
-        firstName: 0, // 0 - none, 1 - error, 2 - accepted.
-        secondName: 0,
-    }
-
-    handleSubmit1 = (event) => {
+    const handleSubmit1 = (event) => {
         event.preventDefault()
         const nameEntered = event.target[0].value
 
-        if (nameEntered.length === 0) {this.setState( {firstName: 1})}
+        if (nameEntered.length === 0) { setFirstNameState(1) }
         else {
-            this.setState( {firstName: 2})
-            this.props.setName(1, nameEntered)
+            setFirstNameState(2)
+            dispatch(setPlayer1Name(nameEntered));
          }
-
     }
 
-    handleSubmit2 = (event) => {
+    const handleSubmit2 = (event) => {
         event.preventDefault()
         const nameEntered = event.target[0].value
-        console.log(nameEntered)
 
-        if (nameEntered.length === 0) {this.setState( {secondName: 1} )}
+        if (nameEntered.length === 0) { setSecondNameState(1) }
         else {
-            this.setState( {secondName: 2}) 
-            this.props.setName(2, nameEntered)
+            setSecondNameState(2)
+            dispatch(setPlayer2Name(nameEntered));
         }
     }
 
 
-        player1InputStyles = [<TextField 
+    const player1InputStyles = [<TextField 
             id="standard-basic" 
-            variant="filled" 
-            label="Player1's name" 
+            label="Enter Player1's name" 
             color="primary" 
             style={{ margin: 8 }}
         />,
         <TextField 
             error
             id="standard-basic" 
-            variant="filled" 
-            label="Player1's name" 
+            label="Enter Player1's name" 
             color="primary" 
             style={{ margin: 8 }}
             helperText="Name cannot be blank."
         /> ,
         <TextField
             label="Name Accepted!"
-            variant="outlined"
             id="validation-outlined-input"
             style={{ margin: 8 }}
       />
     ]
 
-        player2InputStyles = [<TextField 
+    const player2InputStyles = [<TextField 
             id="standard-basic" 
-            variant="filled" 
-            label="Player2's name" 
+            label="Enter Player2's name" 
             color="primary" 
             style={{ margin: 8 }}
         />,
         <TextField 
             error
             id="standard-basic" 
-            variant="filled" 
-            label="Player1's name" 
+            label="Enter Player1's name" 
             color="primary" 
             style={{ margin: 8 }}
             helperText="Name cannot be blank."
         /> ,
         <TextField
             label="Name Accepted!"
-            variant="outlined"
             id="validation-outlined-input"
             style={{ margin: 8 }}
 
     />
     ]
 
+    const startGame = () => {
+        dispatch(startEntireGame());
+    }
 
-    render() { 
         return ( 
-            <main-board class="overlay">
+            <div 
+                style={
+                    {
+                        height: "auto",
+                        width: "auto",
+                        position: "absolute",
+                        backgroundColor: "rgba(191, 236, 255, 0.98)",
+                        display: "flex",
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        zIndex: 5,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontStyle: "italic",
+                        fontSize: 25,
+                        color: "rgb(6, 54, 55)",
+                        textAlign: "center",
+                    }
+                }
+            >
                 <div>
-                    <h1>Let's Play Hangman!!!</h1>
+                    <h1>Let's Play Hangman!</h1>
 
-                    <form onSubmit={this.handleSubmit1}>
-                        {this.player1InputStyles[this.state.firstName]}
+                    <form id="firstPlayerName" onSubmit={handleSubmit1}>
+                        {player1InputStyles[firstNameState]}
+                        <Button 
+                            variant="outlined"
+                            type="submit" 
+                            value="Submit" 
+                            color="primary"
+                            style={{ margin: 8, fontSize: 15}}>
+                            SUBMIT
+                        </Button>
                     </form>
 
-                    <form onSubmit={this.handleSubmit2}>
-                        {this.player2InputStyles[this.state.secondName]}
+                    <form id="secondPlayerName" onSubmit={handleSubmit2}>
+                        {player2InputStyles[secondNameState]}
+                        <Button 
+                            variant="outlined"
+                            type="submit" 
+                            value="Submit" 
+                            color="primary"
+                            style={{ margin: 8, fontSize: 15}}>
+                            SUBMIT
+                        </Button>
                     </form>
 
                     <br/>
 
                     <Button 
+                        id="submit"
                         color="primary"
                         variant="outlined"
-                        onClick={this.props.onClick}>
+                        onClick={startGame}
+                        style={{ margin: 20, fontSize: 20, fontWeight: "bold"}}>
                         START GAME!
                     </Button>
                 </div>
-            </main-board>
+            </div>
          );
-    }
 }
  
 export default GameStartPage;
