@@ -3,7 +3,7 @@ const tipToggleReducer = (state=true, action) => {
         case "TOGGLE_TIPS":
             return !state;
         default:
-            return !state;
+            return state;
     }
 }
 

@@ -33,7 +33,7 @@ function SubmitGuess() {
         else {
          // update false input count
            dispatch(updateFalseInputCount())
-           alert("Your guess was not correct...")
+           alert("Your guess was not correct... 200 points deducted.")
         }
     }
 

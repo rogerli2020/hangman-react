@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFalseGuesses, 
             updateCorrectGuesses, 
@@ -18,9 +18,14 @@ function EachKey(props) {
     const hintCount = useSelector(state => state.hintCountReducer)
     const falseGuessCount = useSelector(state => state.falseInputCountReducer)
 
+    useEffect(() => {
+        updateWordBoardState();
+        }
+    )
+
     const handleClick = () => {
         if (!props.used) {
-            handleCharacterInput(props.thisChar)
+            handleCharacterInput(props.thisChar);
         }
     }
 
@@ -44,39 +49,33 @@ function EachKey(props) {
       }
 
     const updateWordBoardState = () => {
-        var newCurrentWordState = [];
+        console.log("updateWordBoardState called.")
+        if (playerInfo[0].currScore === null) {
+            var newCurrentWordState = [];
+            var allCharsGuessed = true
 
-        for (var i = 0; i < correctWord.length; i++) {
-            if (correctGuesses.includes(correctWord[i])) {
-                newCurrentWordState += [correctWord[i]];
+            for (var i = 0; i < correctWord.length; i++) {
+                if (correctGuesses.includes(correctWord[i])) {
+                    newCurrentWordState += [correctWord[i]];
+                }
+                else {
+                    newCurrentWordState += ['_'];
+                    allCharsGuessed = false;
+                }
             }
-            else {
-                newCurrentWordState += ['_'];
+            
+            if (allCharsGuessed) {
+                handleRoundEnd()
             }
+            dispatch(updateWordBoard(newCurrentWordState));
         }
-        dispatch(updateWordBoard(newCurrentWordState));
-        console.log("Word board updated:", newCurrentWordState)
     }
     
-    const handleCharacterInput =  (thisChar) => {
+    const handleCharacterInput = (thisChar) => {
         if (correctWord.includes(thisChar)) {
             dispatch(updateCorrectGuesses(thisChar));
         } else {
             dispatch(updateFalseGuesses(thisChar));
-        }
-        updateWordBoardState();
-
-        // check if all correct guesses are guessed.
-        let endReached = true;
-        let i = 0;
-        for (i; i < correctWord.length; i++) {
-            if (!correctGuesses.includes(correctWord[i])) {
-                endReached = false;
-            }
-        }
-
-        if (endReached || playerInfo[0].surrendered) {
-            handleRoundEnd()
         }
     }
 
@@ -93,7 +92,6 @@ function EachKey(props) {
             {props.thisChar}
         </each-key>
         );
-
 }
  
 export default EachKey;

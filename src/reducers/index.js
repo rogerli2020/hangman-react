@@ -10,7 +10,6 @@ import hintCountReducer from "./hintCount";
 import playersReducer from "./players";
 import roundCountReducer from "./roundCount";
 import roundStateReducer from "./roundState";
-import surrenderedReducer from "./surrendered";
 import tipToggleReducer from "./tipToggle";
 import wordBoardReducer from "./wordBoard";
 import maxRoundCountReducer from "./maxRoundCount"
@@ -27,7 +26,6 @@ const allReducers = combineReducers(
         playersReducer,
         roundCountReducer,
         roundStateReducer,
-        surrenderedReducer,
         tipToggleReducer,
         wordBoardReducer,
         maxRoundCountReducer,

@@ -1,9 +1,10 @@
 const correctGuessesReducer = (state=[], action) => {
     switch(action.type) {
         case "UPDATE_CORRECT_GUESSES":
-            return state.concat(action.data)
+            state = state.concat(action.data);
+            return state;
         case "RESET_CORRECT_GUESSES":
-            return []
+            return [];
         default:
             return state;
     }
