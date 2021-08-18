@@ -49,7 +49,6 @@ function EachKey(props) {
       }
 
     const updateWordBoardState = () => {
-        console.log("updateWordBoardState called.")
         if (playerInfo[0].currScore === null) {
             var newCurrentWordState = [];
             var allCharsGuessed = true

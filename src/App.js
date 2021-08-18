@@ -13,6 +13,7 @@ function App() {
   return (
     <div>
       <MainBoard/>
+      LAST UPDATED 08/18/2021
     </div>
   );
 }

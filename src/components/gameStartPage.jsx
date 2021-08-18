@@ -138,7 +138,7 @@ function GameStartPage() {
                         variant="outlined"
                         onClick={startGame}
                         style={{ margin: 20, fontSize: 20, fontWeight: "bold"}}>
-                        START GAME!
+                        START GAME
                     </Button>
                 </div>
             </div>
