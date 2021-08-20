@@ -9,4 +9,8 @@ Visit http://rogerli2020.github.io/hangman-react to play the game.
 
 This game is written for the purpose of practicing JavaScript, React, and Redux skills.
 
-## 
+## Future Plans
+
+- Improving the performance.
+- Creating an Online version of this game.
+
