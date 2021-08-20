@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,12 @@ import WordBoard from "./wordBoard";
 import Keyboard from "./keyboard"
 import SubmitGuess from "./guessSubmission"
 import { useSelector, useDispatch } from "react-redux";
-import { updateRoundState, guesserSurrenders, addScore, updateCurrentScoreCalculation } from '../actions';
+import { updateRoundState, 
+  guesserSurrenders, 
+  addScore, 
+  updateCurrentScoreCalculation,
+  changeMaxRoundCount,
+ } from '../actions';
 
 import GameStartPage from "./gameStartPage";
 import RoundEndPage from "./roundEndPage";
@@ -33,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MainBoard() {
+  const [changeMaxPage, setChangeMaxPage] = useState(false);
+  const [rulesPage, setRulesPage] = useState(false);
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -48,7 +56,7 @@ export default function MainBoard() {
     calcScore()
   }
 
-  const calcScore = () => {
+  const calcScore = () => { // for surrendered button...
 
     const baseScore = 0
     const reward = 0
@@ -60,11 +68,112 @@ export default function MainBoard() {
     dispatch(updateCurrentScoreCalculation([baseScore, reward, penalty, compensation, total]))
   }
 
+  const changeMax = (increment) => {
+    if (increment && maxRoundCount < 20) {
+      dispatch(changeMaxRoundCount(maxRoundCount + 2));
+      console.log(maxRoundCount)
+    } else {
+      if (maxRoundCount - currentRound >= 2)
+      dispatch(changeMaxRoundCount(maxRoundCount - 2));
+    }
+  }
+
+  const alterMaxRoundNum = () => {
+    return (
+          <div 
+          style={
+              {
+                  height: "auto",
+                  width: "auto",
+                  position: "absolute",
+                  backgroundColor: "rgba(191, 236, 255, 0.98)",
+                  display: "flex",
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  zIndex: 2,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontStyle: "italic",
+                  fontSize: 25,
+                  fontWeight: "bold",
+                  color: "rgb(6, 54, 55)",
+                  textAlign: "center",
+              }
+          }
+          > <div>
+              <div style={{display:"flex"}} >
+                <Button variant="outlined" 
+                        style={{margin:50}} 
+                        onClick={() => changeMax(false)}> 
+                  - 
+                </Button>
+
+                  <h1>{maxRoundCount / 2} </h1>
+
+                <Button variant="outlined"
+                        style={{margin:50}} 
+                        onClick={() => changeMax(true)}> 
+                  + 
+                </Button>
+              </div>
+              <Button variant="contained" color="primary" onClick={() => setChangeMaxPage(!changeMaxPage)}> CONFIRM </Button>
+            </div>
+          </div>
+    )
+  }
+
+  const displayRulesPage = () => {
+    return (
+      <div 
+          style={
+              {
+                  height: "auto",
+                  width: "auto",
+                  position: "absolute",
+                  backgroundColor: "rgba(191, 236, 255, 0.98)",
+                  display: "flex",
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  zIndex: 2,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontStyle: "italic",
+                  fontSize: 25,
+                  fontWeight: "bold",
+                  color: "rgb(6, 54, 55)",
+                  textAlign: "center",
+              }
+            }
+            onClick={ () => setRulesPage(false)}
+        >
+          <div>
+            <h1 style={{margin: 5}}>RULES</h1>
+            <div style={{fontSize: 20, marginLeft: 50, marginRight: 50, textAlign: "left", fontStyle:"normal", fontWeight:"normal"}}>
+            <li>For every player, scores are only calculated based on their performance as the Guesser. Your word choices as the Executor has no impact on your score but your opponent's.</li>
+            <li>For every round, you start with 1000 Base points. Your Base points goes down as you guess more incorrect characters.</li>
+            <li>For every round, you start with 500 Reward points. Your Reward points goes down as you guess more correct characters. As such, always enter your final word guess once you know what the word is.</li>
+            <li>As a Guesser, you will be subtracted 200 points each time you enter a wrong final word guess.</li>
+            <li>Every score calculation is adjusted according to the length of the correct word to minimize unfairness.</li>
+            </div>
+            <div style={{marginTop: 40, opacity:.5, fontStyle:"normal", fontSize:20}}>CLICK ANYWHERE TO CLOSE</div>
+          </div>
+
+        </div>
+    )
+
+  }
+
   return (
     <div className={classes.root}>
 
     {!entireGameStarted ? <GameStartPage/> : ""}
     {currentRoundState ==="e" ? <RoundEndPage/> : ""}
+    {changeMaxPage ? alterMaxRoundNum() : ""}
+    {rulesPage ? displayRulesPage() : ""}
 
       <Grid container>
         <Grid item xs={3}>
@@ -77,15 +186,17 @@ export default function MainBoard() {
             }
           }
           >
-              H a n g-m a n!!!
+              H a n g m a n!!!
           </h1>
           <Button 
                         color="primary"
+                        onClick={() => setRulesPage(true)}
                     >
                         RULES
                     </Button>
                     <Button 
                         color="primary"
+                        onClick={() => setChangeMaxPage(true)}
                     >
                         CHANGE MAX ROUNDS
                     </Button>
@@ -112,7 +223,12 @@ export default function MainBoard() {
         </Grid>
 
         <Grid item xs={4}>
-          <PlayerPlate playerInfo={players[1]} role="Executor"/>
+            <PlayerPlate playerInfo={players[1]} role="Executor"/>
+            <div style={{display:"flex", justifyContent:"flex-end"}}>
+            <Button color="primary" onClick={() => alert("This project uses a modified version of this English Dictionary: https://github.com/dolph/dictionary/blob/master/popular.txt")}>
+              CREDITS
+              </Button>
+            </div>
         </Grid>
 
         <Grid item xs={4}>
@@ -126,23 +242,14 @@ export default function MainBoard() {
             <SubmitGuess/>
             <hr/>
 
-        <div style={{alignItems: 'center', display: "flex"}}>
-            <div style={{marginLeft: 7}}>
+        <div style={{display: "flex", justifyContent:"center"}}>
+            <div>
                 <Button 
                     variant="contained" 
                     color="secondary"
                     onClick={surrendered}
                 >
-                    SURRENDER
-                </Button>
-            </div>
-
-            <div style={{marginLeft: 7}}>
-                <Button 
-                    variant="contained" 
-                    color="primary"
-                >
-                    TIPS
+                    S U R R E N D E R
                 </Button>
             </div>
         </div>

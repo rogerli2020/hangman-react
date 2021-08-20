@@ -29,7 +29,6 @@ const allReducers = combineReducers(
         tipToggleReducer,
         wordBoardReducer,
         maxRoundCountReducer,
-
     }
 )
 

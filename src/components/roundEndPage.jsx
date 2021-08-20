@@ -4,7 +4,9 @@ import ScoreBoard from "./scoreBoard"
 import Card from '@material-ui/core/Card';
 import SubmitNewWord from './newWordSubmission';
 import Button from '@material-ui/core/Button';
-import { resetPlayerData } from "../actions"
+import { resetPlayerData,
+         resetRoundCount,
+         resetConclude, } from "../actions"
 
 
 function RoundEndPage() {
@@ -17,7 +19,11 @@ function RoundEndPage() {
 
     const resetGame = () => {
         //UNDER CONSTRUCTION!!
+        console.log("resetGame() triggered.")
+        dispatch(resetConclude())
         dispatch(resetPlayerData())
+        dispatch(resetRoundCount())
+        console.log(roundNum)
     }
 
     const printWinner = () => {

@@ -2,14 +2,14 @@
 
 const defaultPlayerList = [
     {   key: 0,
-        name: "Cat",
+        name: "Player_1",
         avatar: "https://freepngimg.com/thumb/painting/84774-square-art-pixel-rectangle-cat-hd-image-free-png.png",
         score: 0,
         currScore: null,
         surrendered: false,
     }, 
     {   key: 1,
-        name: "Dog",
+        name: "Player_2",
         avatar: "https://freepngimg.com/thumb/technology/86267-flowey-square-angle-dog-undertale-free-photo-png.png",
         score: 0,
         currScore: null,
@@ -36,9 +36,11 @@ const playersReducer = (state=defaultPlayerList, action) => {
             player2.currScore = null;
             return [player2, player1]
         case "RESET_PLAYER_DATA":
-            var newArr2 = defaultPlayerList
-            newArr2[0].name = state[0].name
-            newArr2[1].name = state[1].name
+            var newArr2 = defaultPlayerList;
+            newArr2[0].name = state[0].name;
+            newArr2[0].score = 0;
+            newArr2[1].name = state[1].name;
+            newArr2[1].score = 0;
             return newArr2;
         case "SET_PLAYER_1_NAME":
             var newArr3 = [...state];

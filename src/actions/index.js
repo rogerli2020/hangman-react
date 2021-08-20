@@ -121,10 +121,10 @@ export const updateWordBoard = (arr) => {
     }
 }
 
-export const changeMaxRoundCount = (num) => {
+export const changeMaxRoundCount = (n) => {
     return {
         type: "CHANGE_MAX_ROUND_COUNT",
-        data: num
+        data: n,
     }
 }
 
@@ -149,5 +149,17 @@ export const resetHintCount = () => {
 export const resetFalseInputCount = () => {
     return {
         type: "RESET_FALSE_INPUT_COUNT"
+    }
+}
+
+export const resetRoundCount = () => {
+    return {
+        type: "RESET_ROUND_COUNT"
+    }
+}
+
+export const resetConclude = () => {
+    return {
+        type: "RESET_CONCLUDE"
     }
 }
