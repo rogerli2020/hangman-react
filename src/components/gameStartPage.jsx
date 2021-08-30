@@ -104,7 +104,7 @@ function GameStartPage() {
                 }
             >
                 <div>
-                    <h1>Let's Play Hangman!</h1>
+                    <h1>Hangman</h1>
 
                     <form id="firstPlayerName" onSubmit={handleSubmit1}>
                         {player1InputStyles[firstNameState]}

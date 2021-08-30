@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <MainBoard/>
-      LAST UPDATED 08/20/2021
+      LAST UPDATED 08/30/2021
     </div>
   );
 }

@@ -1,3 +1,8 @@
+// components that can end a round:
+    // 1. eachKey
+    // 2. enterGuess
+    // 3. surrenderButton
+
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -5,14 +10,15 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import PlayerPlate from "./playerPlate";
 import WordBoard from "./wordBoard";
-import Keyboard from "./keyboard"
-import SubmitGuess from "./guessSubmission"
+import Keyboard from "./keyboard";
+import SubmitGuess from "./guessSubmission";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRoundState, 
   guesserSurrenders, 
   addScore, 
   updateCurrentScoreCalculation,
   changeMaxRoundCount,
+  resetGotRandom,
  } from '../actions';
 
 import GameStartPage from "./gameStartPage";
@@ -56,16 +62,17 @@ export default function MainBoard() {
     calcScore()
   }
 
-  const calcScore = () => { // for surrendered button...
-
+  const calcScore = () => { // for surrender button...
+    console.log("surrender button gotRand state:", players[0].gotRandom)
     const baseScore = 0
     const reward = 0
     const penalty = 0
-    const compensation = 0
-    const total = 0
+    const compensation = players[0].gotRandom === true ? 100 : 0;
+    const total = baseScore + reward + penalty + compensation
     
-    dispatch(addScore(total))
+    dispatch(addScore(total));
     dispatch(updateCurrentScoreCalculation([baseScore, reward, penalty, compensation, total]))
+    dispatch(resetGotRandom());
   }
 
   const changeMax = (increment) => {
@@ -122,6 +129,10 @@ export default function MainBoard() {
             </div>
           </div>
     )
+  }
+
+  const getHintImage = async (keyword) => {
+    console.log("getHintImage triggered.")
   }
 
   const displayRulesPage = () => {
@@ -232,7 +243,10 @@ export default function MainBoard() {
         </Grid>
 
         <Grid item xs={4}>
-          <Paper className={classes.paper}>HINT <br/>(under construction)</Paper>
+          <Paper className={classes.paper}>
+            HINTS
+            <button onClick={() => getHintImage("dog")}>TEST</button>
+          </Paper>
         </Grid>
         <Grid item xs={8}>
           <WordBoard/>

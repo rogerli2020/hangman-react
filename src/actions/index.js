@@ -163,3 +163,15 @@ export const resetConclude = () => {
         type: "RESET_CONCLUDE"
     }
 }
+
+export const setGotRandom = () => {
+    return {
+        type: "SET_GOT_RANDOM"
+    }
+}
+
+export const resetGotRandom = () => {
+    return {
+        type: "RESET_GOT_RANDOM"
+    }
+}

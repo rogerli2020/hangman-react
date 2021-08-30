@@ -6,6 +6,7 @@ import { updateFalseGuesses,
             updateRoundState,
             addScore,
             updateCurrentScoreCalculation,
+            resetGotRandom,
          } from "../actions"
 
 function EachKey(props) {
@@ -36,16 +37,17 @@ function EachKey(props) {
         const baseScore = Math.floor(1000 * (wrongCharCount - falseGuesses.length)/(wrongCharCount))
         const reward = Math.floor(500 * (correctCharCount - correctGuesses.length)/correctCharCount)
         const penalty = -(100 * hintCount + 200 * falseGuessCount)
-        const compensation = 25 * 0 // not implemented yet...
+        const compensation = playerInfo[0].gotRandom ? 100 : 0
         const total = (baseScore + reward + penalty + compensation)
         
         if (!playerInfo[0].surrendered && total >= 0) {
             dispatch(addScore(total))
             dispatch(updateCurrentScoreCalculation([baseScore, reward, penalty, compensation, total]))
         } else {
-            dispatch(addScore(0))
-            dispatch(updateCurrentScoreCalculation([0, 0, 0, 0, 0]))
+            dispatch(addScore(compensation))
+            dispatch(updateCurrentScoreCalculation([0, 0, 0, compensation, compensation]))
         }
+        dispatch(resetGotRandom())
       }
 
     const updateWordBoardState = () => {

@@ -14,14 +14,15 @@ import { setWord,
          resetFalseGuesses,
          resetHintCount,
          resetFalseInputCount,
+         setGotRandom,
         } from "../actions"
 import { Divider } from '@material-ui/core';
 
 function SubmitNewWord(){
-    const [getRandom, setGetRandom] = useState(false)
     const dispatch = useDispatch();
     const roundCount = useSelector(state => state.roundCountReducer)
     const maxRoundCount = useSelector(state => state.maxRoundCountReducer);
+    const players = useSelector(state => state.playersReducer)
 
     const engDict = {
         'AA': null,
@@ -25313,7 +25314,6 @@ function SubmitNewWord(){
         if (inp in engDict) {
             return true;
         }
-
         return false;
     }
 
@@ -25327,14 +25327,13 @@ function SubmitNewWord(){
 
     const handleSubmit = (event) => {
         event.preventDefault()
-
-        if (getRandom) {
+        console.log("handleSubmit gotRandom state: ", players[0].gotRandom)
+        if (players[1].gotRandom) {
             const keys = Object.keys(engDict);
             const len = keys.length;
             const rnd = Math.floor(Math.random() * len);
             event.target[0].value = keys[rnd];
         }
-        setGetRandom(false)
 
         if (!checkValidity(event.target[0].value)) {
             window.alert("[NOT ACCEPTED] Please enter a valid English word that is longer than 3 characters.")
@@ -25370,6 +25369,7 @@ function SubmitNewWord(){
     }
 
     return (
+        <div>
         <form onSubmit={handleSubmit}>
             <TextField 
                 id="standard-basic" 
@@ -25389,11 +25389,16 @@ function SubmitNewWord(){
                 color="secondary"
                 type="submit" 
                 style={{ marginTop: 20, fontSize:15 }}
-                onClick={() => setGetRandom(true)}
+                onClick={() => dispatch(setGotRandom())}
                 >
-                CHOOSE RANDOM
+                CHOOSE RANDOM *
             </Button>              
         </form>
+            <div style={{ fontSize: 15, fontWeight:"normal", opacity:".5" }}>
+                <br/>
+                *Your opponent will be compensated for 100 pts. if you choose random.
+            </div>
+        </div>
 
     );
 }

@@ -56,7 +56,7 @@ export default function SimpleCard(props) {
                     </Typography> :
           <table>
             <tr>
-              <td>BASE SCORE:</td>
+              <td>BASE POINTS:</td>
               <td>{props.playerInfo.currScore[0]}</td>
             </tr>
             <tr>

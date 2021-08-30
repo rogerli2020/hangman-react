@@ -7,6 +7,7 @@ const defaultPlayerList = [
         score: 0,
         currScore: null,
         surrendered: false,
+        gotRandom: false,
     }, 
     {   key: 1,
         name: "Player_2",
@@ -14,6 +15,7 @@ const defaultPlayerList = [
         score: 0,
         currScore: null,
         surrendered: false,
+        gotRandom: false,
     }
 ]
 
@@ -58,6 +60,15 @@ const playersReducer = (state=defaultPlayerList, action) => {
             var newArr6 = [...state]
             newArr6[0].surrendered = true;
             return newArr6;
+        case "SET_GOT_RANDOM":
+             var newArr7 = [...state];
+             newArr7[1].gotRandom = true;
+             return newArr7;
+        case "RESET_GOT_RANDOM":
+            var newArr8 = [...state];
+            newArr8[0].gotRandom = false;
+            newArr8[1].gotRandom = false;
+            return newArr8;
         
         default:
             return state;
