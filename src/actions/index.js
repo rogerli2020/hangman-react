@@ -175,3 +175,9 @@ export const resetGotRandom = () => {
         type: "RESET_GOT_RANDOM"
     }
 }
+
+export const deductHintCount = () => {
+    return {
+        type: "DEDUCT_HINT_COUNT"
+    }
+}

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { resetHintCount } from '../actions'
 
 function HintPage() {
+    const dispatch = useDispatch();
     const [jsonObj, setJsonObj] = useState(null);
     const key = '7c39d164-4df9-4f8f-ba37-ffb3d78f7eb5';
     const correctWord = useSelector(state => state.correctWordReducer)
@@ -9,22 +11,83 @@ function HintPage() {
 
     const getDefinition = (word) => {
         const url = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + key;
-        fetch(url)
-        .then(response => response.json())
-        .then(jsonObject => setJsonObj(jsonObject))
-        .catch(error => console.error(error));
+        try {
+            fetch(url)
+            .then(response => response.json())
+            .then(jsonObject => setJsonObj(jsonObject))
+            .catch(error => console.error(error));
+        } catch (error) {
+            alert("[ERROR] Failed to fetch information from server. Error:", error)
+            dispatch(resetHintCount())
+        }
+    }
+
+    const cleanUp = (arr) => {
+        const unhelpfulWords = [
+            'a', 
+            'an', 
+            'of', 
+            'the', 
+            'or', 
+            'and', 
+            'about', 
+            'as', 
+            'to', 
+            'with', 
+            '', 
+            'especially',
+            'such',
+            'from',
+            'not',
+            'by',
+            'that',
+            'in',
+            'is',
+            'are',
+            'often',
+            'usually',
+            correctWord,
+        ]
+        var i = 0;
+        for (i; i < arr.length; i++) {
+            arr[i] = arr[i].replace(/[^0-9a-z]/gi, '')
+        };
+
+        i = arr.length - 1;
+        for (i; i >= 0; i--) {
+            if (unhelpfulWords.includes(arr[i])) {
+                arr.splice(i, 1);
+            }
+        }
+
+        return arr
     }
 
     const getRandomKeywords = () => {
-        const defStringJSON = jsonObj[0].shortdef; // jsonObj is the "jsonObject" object in getDefinition.
-        const defString = JSON.stringify(defStringJSON);
-        const defList = defString.split(" ") // bug here. Can't split defString...
-        var word1 = defList[Math.floor(Math.random()*defList.length)];
-        var word2 = defList[Math.floor(Math.random()*defList.length)];
-        var word3 = defList[Math.floor(Math.random()*defList.length)];
-        var retString = word1 + " " + word2 + " " + word3;
+        try {
+            const defString = JSON.stringify(jsonObj[0].shortdef);
+            const messyDefList = defString.split(" ");
+            const defList = cleanUp(messyDefList);
+            var word1 = defList[Math.floor(Math.random()*defList.length)];
+            var word2 = defList[Math.floor(Math.random()*defList.length)];
+            var word3 = defList[Math.floor(Math.random()*defList.length)];
+            var retString = word1 + " " + word2 + " " + word3;
 
-        return retString
+            return retString
+        } catch (error) {
+            alert("[ERROR] Failed to fetch information from server. Check your internet connectivity.")
+            dispatch(resetHintCount());
+        }
+    }
+
+    const getFL = () => {
+        console.log("getFl() triggered...")
+        try {
+            return jsonObj === null ? "[loading...]" : jsonObj[0].fl;
+        } catch (error) {
+            alert("[ERROR] Failed to fetch information from server. Check your internet connectivity.")
+            dispatch(resetHintCount());
+        }
     }
 
     return (
@@ -34,7 +97,7 @@ function HintPage() {
             {hintCount >= 1 ?
                 <div style={{fontSize: 18, color:"black"}}>
                     <strong>① </strong>
-                    this word is a(n) {jsonObj === null ? "" : jsonObj[0].fl}. 
+                    this word is a(n) {getFL()}. 
                 </div>
                 : ""
             }
