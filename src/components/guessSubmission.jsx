@@ -44,7 +44,7 @@ function SubmitGuess() {
     
         const baseScore = Math.floor(1000 * (wrongCharCount - falseGuesses.length)/(wrongCharCount))
         const reward = Math.floor(500 * (correctCharCount - correctGuesses.length)/correctCharCount)
-        const penalty = -(100 * hintCount + 200 * falseGuessCount)
+        const penalty = -(50 * hintCount + 200 * falseGuessCount)
         const compensation = playerInfo[0].gotRandom === true ? 100 : 0
         const total = (baseScore + reward + penalty + compensation)
         

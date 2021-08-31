@@ -19,10 +19,12 @@ import { updateRoundState,
   updateCurrentScoreCalculation,
   changeMaxRoundCount,
   resetGotRandom,
+  updateHintCount,
  } from '../actions';
 
 import GameStartPage from "./gameStartPage";
 import RoundEndPage from "./roundEndPage";
+import HintPage from "./hintPage";
 import { auto } from 'async';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     color: theme.palette.text.secondary,
     margin: 3,
     height: 200
@@ -55,6 +59,7 @@ export default function MainBoard() {
   const entireGameStarted = useSelector(state => state.entireGameStartedReducer);
   const currentRoundState = useSelector(state => state.roundStateReducer);
   const maxRoundCount = useSelector(state => state.maxRoundCountReducer);
+  const hintCount = useSelector(state => state.hintCountReducer);
 
   const surrendered = () => {
     dispatch(guesserSurrenders());
@@ -129,10 +134,6 @@ export default function MainBoard() {
             </div>
           </div>
     )
-  }
-
-  const getHintImage = async (keyword) => {
-    console.log("getHintImage triggered.")
   }
 
   const displayRulesPage = () => {
@@ -236,7 +237,12 @@ export default function MainBoard() {
         <Grid item xs={4}>
             <PlayerPlate playerInfo={players[1]} role="Executor"/>
             <div style={{display:"flex", justifyContent:"flex-end"}}>
-            <Button color="primary" onClick={() => alert("This project uses a modified version of this English Dictionary: https://github.com/dolph/dictionary/blob/master/popular.txt")}>
+            <Button color="primary" onClick={() => alert(
+                "This project uses a modified version of this English Dictionary: " +
+                "https://github.com/dolph/dictionary/blob/master/popular.txt." + 
+                "\n" + "\n" + 
+                "This project also uses the Marriam-Webster Dictionary API. " + 
+                "Find out more at: https://dictionaryapi.com/")}>
               CREDITS
               </Button>
             </div>
@@ -244,8 +250,17 @@ export default function MainBoard() {
 
         <Grid item xs={4}>
           <Paper className={classes.paper}>
-            HINTS
-            <button onClick={() => getHintImage("dog")}>TEST</button>
+            <div>Hints</div>
+            <hr/>
+            {hintCount !== 0 ? <HintPage/> : ""}
+
+              {hintCount <= 2 ? 
+                <Button variant="outlined" color="secondary" onClick={() => dispatch(updateHintCount())}>
+                  {hintCount === 0 ? "GET HINT" : "GET MORE HINTS"}
+                </Button> : ""
+              }
+
+            <p>50 points will be deducted for each hint requested.</p>
           </Paper>
         </Grid>
         <Grid item xs={8}>

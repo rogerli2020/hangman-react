@@ -3,7 +3,7 @@
 const defaultPlayerList = [
     {   key: 0,
         name: "Player_1",
-        avatar: "https://freepngimg.com/thumb/painting/84774-square-art-pixel-rectangle-cat-hd-image-free-png.png",
+        avatar: "https://mpng.subpng.com/20180802/oja/kisspng-pixel-art-drawing-pixelation-dog-pixilart-%D0%A9%D0%B5%D0%BD%D0%BE%D0%BA-by-computer-school-5b62b07a925456.5254540415331943625994.jpg",
         score: 0,
         currScore: null,
         surrendered: false,

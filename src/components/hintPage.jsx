@@ -1,25 +1,63 @@
-var script = document.createElement('script');
-script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
-script.type = 'text/javascript';
-document.getElementsByTagName('head')[0].appendChild(script);
+import React, { useState } from 'react';
+import { useSelector } from "react-redux";
 
-var keyword = "dog";
+function HintPage() {
+    const [jsonObj, setJsonObj] = useState(null);
+    const key = '7c39d164-4df9-4f8f-ba37-ffb3d78f7eb5';
+    const correctWord = useSelector(state => state.correctWordReducer)
+    const hintCount = useSelector(state => state.hintCountReducer)
 
-$(document).ready(function(){
+    const getDefinition = (word) => {
+        const url = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + key;
+        fetch(url)
+        .then(response => response.json())
+        .then(jsonObject => setJsonObj(jsonObject))
+        .catch(error => console.error(error));
+    }
 
-    $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-    {
-        tags: keyword,
-        tagmode: "any",
-        format: "json"
-    },
-    function(data) {
-        var rnd = Math.floor(Math.random() * data.items.length);
+    const getRandomKeywords = () => {
+        const defStringJSON = jsonObj[0].shortdef; // jsonObj is the "jsonObject" object in getDefinition.
+        const defString = JSON.stringify(defStringJSON);
+        const defList = defString.split(" ") // bug here. Can't split defString...
+        var word1 = defList[Math.floor(Math.random()*defList.length)];
+        var word2 = defList[Math.floor(Math.random()*defList.length)];
+        var word3 = defList[Math.floor(Math.random()*defList.length)];
+        var retString = word1 + " " + word2 + " " + word3;
 
-        var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
+        return retString
+    }
 
-        console.log(image_src)
+    return (
+        <div style={{margin:"10"}}>
+            {jsonObj === null ? getDefinition(correctWord) : ""}
 
-    });
+            {hintCount >= 1 ?
+                <div style={{fontSize: 18, color:"black"}}>
+                    <strong>① </strong>
+                    this word is a(n) {jsonObj === null ? "" : jsonObj[0].fl}. 
+                </div>
+                : ""
+            }
 
-});
+            {hintCount >= 2 ?
+                <div style={{fontSize: 18, color:"black"}}>
+                    <strong>② HINT WORDS: </strong>
+                    {getRandomKeywords()} 
+                </div>
+                : ""
+            }
+
+
+            {hintCount >= 3 ?
+                <div style={{fontSize: 18, color:"black"}}>
+                    <strong>③ HINT WORDS: </strong>
+                    {getRandomKeywords()} 
+                </div>
+                : ""
+            }
+
+        </div>
+    );
+};
+
+export default HintPage;
