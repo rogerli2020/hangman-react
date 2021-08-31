@@ -7,7 +7,7 @@ Visit http://rogerli2020.github.io/hangman-react to play the game.
 
 ## Purpose
 
-This game is written for the purpose of practicing JavaScript, React, and Redux skills.
+This game is written for the purpose of learning and practicing HTML/CSS, React and Redux library, and general JavaScript skills, such as modifying a list, creating a dictionary, and fetching information from servers using web APIs.
 
 ## Future Plans
 
