@@ -3,7 +3,7 @@
 const defaultPlayerList = [
     {   key: 0,
         name: "Player_1",
-        avatar: "https://mpng.subpng.com/20180802/oja/kisspng-pixel-art-drawing-pixelation-dog-pixilart-%D0%A9%D0%B5%D0%BD%D0%BE%D0%BA-by-computer-school-5b62b07a925456.5254540415331943625994.jpg",
+        avatar: "https://png2.cleanpng.com/dy/85c403f919ad6c9dd1f79a11bfc17f38/L0KzQYm3VsEzN5xwipH0aYP2gLBuTgBqgJZxRdN7dD3mfLr3TfFzfF46eqNvNHHmRIHtUsA4P185TKcBN0S4SYK8Usg4P2g5SaQ5NkKxgLBu/kisspng-pixel-art-clip-art-5b1f4ac40f2077.445674591528777412062.png",
         score: 0,
         currScore: null,
         surrendered: false,
