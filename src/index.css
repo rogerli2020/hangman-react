@@ -71,7 +71,6 @@ word-board{
 word-boardtext {
   font-size: 30px;
   font-weight: bold;
-  align-self: center;
   text-align: center;
 }
 
@@ -85,7 +84,7 @@ each-key {
   height: 50px;
   width: 50px;
   display: flex;
-  background-color: rgb(48, 91, 91);
+  background-color: rgba(0, 0, 0, 0.536);
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -96,7 +95,7 @@ each-key {
 }
 
 each-key.used {
-  background-color: rgb(74, 128, 128);
+  background-color: rgba(0, 0, 0, 0.25);
   cursor: default;
   font-weight: lighter;
 }
@@ -105,7 +104,7 @@ keyboard-panel {
   height: 200px;
   width: 650px;
   display:block;
-  background-color: rgb(131, 187, 187);
+  background-color: rgb(97, 158, 181);
   margin:5px;
   align-items:center;
   justify-content: center;
@@ -122,7 +121,7 @@ each-row-of-keys {
 
 keyboard-panel.overlay {
   position: absolute;
-  background-color: rgba(0,0,0,0.75);
+  background-color: rgb(0,0,0);
   font-weight: bold;
   text-align: center;
   color: white;
@@ -182,7 +181,7 @@ main-board.overlay {
   background-color: rgba(191, 236, 255, 0.954);
   font-weight: bold;
   text-align: center;
-  color: rgb(6, 54, 55);
+  color: rgb(111, 155, 174);
   font-style: italic;
   font-size: 25px;
   margin:0px;

@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    backgroundColor: "rgb(61, 184, 184)",
+    backgroundColor: "rgb(255, 147, 123)",
     margin: 5,
     maxWidth: 400,
     height: 75,

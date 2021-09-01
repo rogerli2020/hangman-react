@@ -11,15 +11,10 @@ function HintPage() {
 
     const getDefinition = (word) => {
         const url = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" + word + "?key=" + key;
-        try {
             fetch(url)
             .then(response => response.json())
             .then(jsonObject => setJsonObj(jsonObject))
             .catch(error => console.error(error));
-        } catch (error) {
-            alert("[ERROR] Failed to fetch information from server. Error:", error)
-            dispatch(resetHintCount())
-        }
     }
 
     const cleanUp = (arr) => {

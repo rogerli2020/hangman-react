@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     width: auto,
     height: auto,
     flexGrow: 2,
-    backgroundColor: "rgb(155, 210, 210)",
+    backgroundColor: "rgb(178, 230, 242)", // MAINBOARD COLOR
     maxWidth: 1000,
     position: "relative",
   },
@@ -198,7 +198,7 @@ export default function MainBoard() {
             }
           }
           >
-              H a n g m a n!!!
+              H a n g m a n
           </h1>
           <Button 
                         color="primary"
@@ -223,7 +223,7 @@ export default function MainBoard() {
             marginTop: 5,
             justifyContent:"center", 
             alignItems: "center",
-            backgroundColor: "rgb(135, 190, 190)",
+            backgroundColor: "rgb(142, 189, 206)", // ROUNDPLATE COLOR
             borderRadius: 10,
             }}>
           <h1 style={{fontStyle:"italic", marginLeft:10, display: "flex", fontSize:40}}>
